@@ -17,6 +17,13 @@ class ListViewController: UIViewController {
         super.loadView()
         self.title = "List"
         self.view = listView
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        setupSearchController()
+    }
+    
+    func setupSearchController() {
+        let searchBar = UISearchController(searchResultsController: nil)
+        self.navigationItem.searchController = searchBar
     }
     
     override func viewDidLoad() {
