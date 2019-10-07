@@ -53,11 +53,13 @@ extension ListView: ViewCodable {
     }
     
     func setupConstraints() {
-        tableView
-            .anchor(top: self.topAnchor)
-            .anchor(bottom: self.bottomAnchor)
-            .anchor(left: self.leftAnchor)
-            .anchor(right: self.rightAnchor)
+        tableView.cBuild(make: .fillSuperview)
+        
+//        tableView
+//            .anchor(top: self.topAnchor)
+//            .anchor(bottom: self.bottomAnchor)
+//            .anchor(left: self.leftAnchor)
+//            .anchor(right: self.rightAnchor)
     }
     
     func setupAdditionalConfiguration() {
