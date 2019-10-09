@@ -31,3 +31,11 @@ class ListViewController: UIViewController {
     }
     
 }
+
+extension ListViewController: SendDataDelegate {
+    
+    func sendData<T>(data: T) {
+        print(data)
+    }
+    
+}

@@ -13,6 +13,7 @@ enum AppService: Service {
     // MARK: - Get
     case getMarcas
 //    case getMarca(id: Int)
+//    case getModelo
 
     var baseURL: URL {
         guard let url = URL(string: "http://fipeapi.appspot.com/api/1/carros")

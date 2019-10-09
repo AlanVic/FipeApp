@@ -13,6 +13,7 @@ class ListView<T: Codable>: UIView, UITableViewDataSource {
     private let tableView = UITableView()
     
     private var list: [T] = []
+    weak var delegate: SendDataDelegate
     
     var display: KeyPath<T, String>
 
@@ -23,6 +24,7 @@ class ListView<T: Codable>: UIView, UITableViewDataSource {
         NetworkManager.getAll(service: service) { (list: [T]?, error) in
             if error == nil {
                 self.list = list ?? []
+                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
