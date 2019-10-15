@@ -17,6 +17,13 @@ class ListView<T: Codable>: UIView, UITableViewDataSource {
     
     let searchViewController = UISearchController(searchResultsController: nil)
     
+    lazy var activyIndicator:UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .whiteLarge)
+        indicator.startAnimating()
+        
+        return indicator
+    }()
+    
     var isSearchBarEmpty: Bool {
       return searchViewController.searchBar.text?.isEmpty ?? true
     }
@@ -35,7 +42,11 @@ class ListView<T: Codable>: UIView, UITableViewDataSource {
                 self.list = list as! [Marca]
                 
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
+                        self.tableView.reloadData()
+                        self.stopIndicator()
+                    }
+                    
                 }
             }
         }
@@ -75,6 +86,16 @@ class ListView<T: Codable>: UIView, UITableViewDataSource {
             return marca.name.lowercased().contains(searchText.lowercased())
         })
     }
+    
+    func startIndicator() {
+        self.addSubview(activyIndicator)
+        activyIndicator.startAnimating()
+    }
+    
+    func stopIndicator() {
+        activyIndicator.removeFromSuperview()
+        activyIndicator.stopAnimating()
+    }
 }
 
 
@@ -82,10 +103,13 @@ extension ListView: ViewCodable {
     
     func buildViewHierarchy() {
         self.addSubview(tableView)
+        startIndicator()
     }
     
     func setupConstraints() {
         tableView.cBuild(make: .fillSuperview)
+        activyIndicator.cBuild(make: .centerXInSuperView)
+        activyIndicator.cBuild(make: .centerYInSuperView)
         
 //        tableView
 //            .anchor(top: self.topAnchor)
