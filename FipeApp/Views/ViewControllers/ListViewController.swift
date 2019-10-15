@@ -18,24 +18,23 @@ class ListViewController: UIViewController {
         self.title = "List"
         self.view = listView
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        setupSearchController()
-    }
-    
-    func setupSearchController() {
-        let searchBar = UISearchController(searchResultsController: nil)
-        self.navigationItem.searchController = searchBar
+        self.navigationItem.searchController = listView.searchViewController
+        self.listView.searchViewController.searchResultsUpdater = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
 }
 
-extension ListViewController: SendDataDelegate {
+extension ListViewController: UISearchResultsUpdating {
     
-    func sendData<T>(data: T) {
-        print(data)
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = listView.searchViewController.searchBar
+        guard let searchText = searchBar.text else { return }
+        listView.filterContentForSearchText(searchText)
+        
+        listView.tableView.reloadData()
     }
     
 }
